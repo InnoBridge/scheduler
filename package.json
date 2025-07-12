@@ -1,8 +1,16 @@
 {
   "name": "@innobridge/scheduler",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A TypeScript library for LLM clients",
   "author": "yilengyao <innobridgetechnology@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InnoBridge/scheduler.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "license": "InnoBridge",
   "type": "module",
   "main": "dist/index.cjs",
@@ -37,6 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.29",
+    "@types/pg": "^8.15.4",
     "rimraf": "^6.0.1",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
@@ -44,5 +53,9 @@
   },
   "engines": {
     "node": "^20.0.0 || >=22.0.0"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "pg": "^8.16.3"
   }
 }
