@@ -1,6 +1,13 @@
 import { isDatabaseClientSet, getDatabaseClient } from '@/api/database';
 import { Event, EventStatus } from '@/models/events';
 
+const getEventById = async (eventId: string): Promise<Event | null> => {
+    if (!isDatabaseClientSet()) {
+        throw new Error("Database client not initialized. Call initializeDatabase first.");
+    }
+    return await getDatabaseClient()!.getEventById(eventId);
+};
+
 const getEventsByProvider = async (providerId: string): Promise<Event[]> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
@@ -15,11 +22,11 @@ const getEventsByCustomer = async (customerId: string): Promise<Event[]> => {
     return await getDatabaseClient()!.getEventsByCustomer(customerId);
 };
 
-const getEventByProviderOrCustomer = async (userId: string): Promise<Event[]> => {
+const getEventsByProviderOrCustomer = async (userId: string): Promise<Event[]> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
     }
-    return await getDatabaseClient()!.getEventByProviderOrCustomer(userId);
+    return await getDatabaseClient()!.getEventsByProviderOrCustomer(userId);
 };
 
 const createEvent = async (event: Event): Promise<Event> => {
@@ -44,9 +51,10 @@ const deleteEvent = async (eventId: string): Promise<void> => {
 };
 
 export {
+    getEventById,
     getEventsByProvider,
     getEventsByCustomer,
-    getEventByProviderOrCustomer,
+    getEventsByProviderOrCustomer,
     createEvent,
     updateEventStatus,
     deleteEvent

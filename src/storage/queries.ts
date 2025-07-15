@@ -36,6 +36,10 @@ const INDEX_EVENTS_QUERY =
      CREATE INDEX IF NOT EXISTS idx_scheduler_events_provider_start ON scheduler_events(provider_id, start_time);
      CREATE INDEX IF NOT EXISTS idx_scheduler_events_date_range ON scheduler_events(start_time, end_time);`;
 
+const GET_EVENT_BY_ID =
+    `SELECT * FROM scheduler_events 
+     WHERE event_id = $1`;
+
 const GET_EVENTS_BY_PROVIDER_QUERY =
     `SELECT * FROM scheduler_events 
      WHERE provider_id = $1 
@@ -46,7 +50,7 @@ const GET_EVENTS_BY_CUSTOMER_QUERY =
      WHERE customer_id = $1 
      ORDER BY start_time ASC`;
 
-const GET_EVENT_BY_PROVIDER_OR_CUSTOMER_QUERY =
+const GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY =
     `SELECT * FROM scheduler_events 
      WHERE (provider_id = $1 OR customer_id = $1) 
      ORDER BY start_time ASC`;
@@ -76,9 +80,10 @@ export {
     UPDATE_SCHEMA_VERSION_QUERY,
     CREATE_EVENTS_TABLE_QUERY,
     INDEX_EVENTS_QUERY,
+    GET_EVENT_BY_ID,
     GET_EVENTS_BY_PROVIDER_QUERY,
     GET_EVENTS_BY_CUSTOMER_QUERY,
-    GET_EVENT_BY_PROVIDER_OR_CUSTOMER_QUERY,
+    GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY,
     CREATE_EVENT_QUERY,
     UPDATE_EVENT_STATUS_QUERY,
     DELETE_EVENT_QUERY

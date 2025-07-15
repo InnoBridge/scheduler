@@ -4,9 +4,10 @@ import { EventsDatabaseClient } from '@/storage/events_database_client';
 import {
     CREATE_EVENTS_TABLE_QUERY,
     INDEX_EVENTS_QUERY,
+    GET_EVENT_BY_ID,
     GET_EVENTS_BY_PROVIDER_QUERY,
     GET_EVENTS_BY_CUSTOMER_QUERY,
-    GET_EVENT_BY_PROVIDER_OR_CUSTOMER_QUERY,
+    GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY,
     CREATE_EVENT_QUERY,
     UPDATE_EVENT_STATUS_QUERY,
     DELETE_EVENT_QUERY
@@ -30,6 +31,14 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         await this.queryWithClient(client, CREATE_EVENTS_TABLE_QUERY);
     }
 
+    async getEventById(eventId: string): Promise<Event | null> {
+        const result = await this.query(GET_EVENT_BY_ID, [eventId]);
+        if (result.rows.length === 0) {
+            return null;
+        }
+        return mapToEvent(result.rows[0]);
+    }
+
     async getEventsByProvider(providerId: string): Promise<Event[]> {
         const result = await this.query(GET_EVENTS_BY_PROVIDER_QUERY, [providerId]);
         return result.rows.map(mapToEvent);
@@ -40,8 +49,8 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         return result.rows.map(mapToEvent);
     }
 
-    async getEventByProviderOrCustomer(userId: string): Promise<Event[]> {
-        const result = await this.query(GET_EVENT_BY_PROVIDER_OR_CUSTOMER_QUERY, [userId]);
+    async getEventsByProviderOrCustomer(userId: string): Promise<Event[]> {
+        const result = await this.query(GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY, [userId]);
         return result.rows.map(mapToEvent);
     }
 
