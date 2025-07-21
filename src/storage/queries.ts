@@ -72,7 +72,8 @@ const UPDATE_EVENT_STATUS_QUERY =
 
 const DELETE_EVENT_QUERY =
     `DELETE FROM scheduler_events 
-     WHERE event_id = $1`;
+     WHERE event_id = $1
+     RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
 
 export {
     CREATE_VERSION_TABLE_QUERY,

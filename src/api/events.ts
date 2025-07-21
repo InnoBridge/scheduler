@@ -43,7 +43,7 @@ const updateEventStatus = async (eventId: string, status: EventStatus, customerI
     return await getDatabaseClient()!.updateEventStatus(eventId, status, color, customerId);
 };
 
-const deleteEvent = async (eventId: string): Promise<void> => {
+const deleteEvent = async (eventId: string): Promise<Event | null> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
     }
