@@ -79,8 +79,16 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         return mapToEvent(result.rows[0]);
     }
 
-    async deleteEvent(eventId: string): Promise<void> {
-        await this.query(DELETE_EVENT_QUERY, [eventId]);
+    async deleteEvent(eventId: string): Promise<Event | null> {
+        const result = await this.query(DELETE_EVENT_QUERY, [eventId]);
+        
+        // If no rows were affected, event didn't exist
+        if (result.rows.length === 0) {
+            return null;
+        }
+        
+        // Return the deleted event
+        return mapToEvent(result.rows[0]);
     }
 }
 

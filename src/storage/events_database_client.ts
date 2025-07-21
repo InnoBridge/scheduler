@@ -8,7 +8,7 @@ interface EventsDatabaseClient extends BaseDatabaseClient {
     getEventsByProviderOrCustomer(userId: string): Promise<Event[]>;
     createEvent(event: Event): Promise<Event>;
     updateEventStatus(eventId: string, status: EventStatus, customerId?: string, color?: string): Promise<Event>;
-    deleteEvent(eventId: string): Promise<void>;
+    deleteEvent(eventId: string): Promise<Event | null>;
 };
 
 export {
