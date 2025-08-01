@@ -61,11 +61,38 @@ const CREATE_EVENT_QUERY =
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
      RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
 
+// Updates only the status
 const UPDATE_EVENT_STATUS_QUERY =
     `UPDATE scheduler_events 
      SET status = $2, 
-         color = COALESCE($3, color),
-         customer_id = COALESCE($4, customer_id),
+         updated_at = NOW() 
+     WHERE event_id = $1
+     RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
+
+// Updates status and color
+const UPDATE_EVENT_STATUS_AND_COLOR_QUERY =
+    `UPDATE scheduler_events 
+     SET status = $2, 
+         color = $3,
+         updated_at = NOW() 
+     WHERE event_id = $1
+     RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
+
+// Updates status and customer_id
+const UPDATE_EVENT_STATUS_AND_CUSTOMER_ID_QUERY =
+    `UPDATE scheduler_events 
+     SET status = $2, 
+         customer_id = $3,
+         updated_at = NOW() 
+     WHERE event_id = $1
+     RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
+
+// Updates status, color, and customer_id
+const UPDATE_EVENT_STATUS_COLOR_AND_CUSTOMER_ID_QUERY =
+    `UPDATE scheduler_events 
+     SET status = $2, 
+         color = $3,
+         customer_id = $4,
          updated_at = NOW() 
      WHERE event_id = $1
      RETURNING event_id, title, summary, start_time, end_time, color, status, provider_id, customer_id`;
@@ -87,5 +114,8 @@ export {
     GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY,
     CREATE_EVENT_QUERY,
     UPDATE_EVENT_STATUS_QUERY,
+    UPDATE_EVENT_STATUS_AND_COLOR_QUERY,                // Status + color
+    UPDATE_EVENT_STATUS_AND_CUSTOMER_ID_QUERY,          // Status + customer_id
+    UPDATE_EVENT_STATUS_COLOR_AND_CUSTOMER_ID_QUERY,  
     DELETE_EVENT_QUERY
 };
