@@ -10,6 +10,9 @@ import {
     GET_EVENTS_BY_PROVIDER_OR_CUSTOMER_QUERY,
     CREATE_EVENT_QUERY,
     UPDATE_EVENT_STATUS_QUERY,
+    UPDATE_EVENT_STATUS_AND_COLOR_QUERY,                // Status + color
+    UPDATE_EVENT_STATUS_AND_CUSTOMER_ID_QUERY,          // Status + customer_id
+    UPDATE_EVENT_STATUS_COLOR_AND_CUSTOMER_ID_QUERY, 
     DELETE_EVENT_QUERY
 } from '@/storage/queries';
 import { PostgresConfiguration } from '@/models/configuration';
@@ -69,12 +72,38 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         return mapToEvent(result.rows[0]);
     }
 
-    async updateEventStatus(eventId: string, status: EventStatus, customerId?: string, color?: string): Promise<Event> {
+    async updateEventStatus(eventId: string, status: EventStatus): Promise<Event> {
         const result = await this.query(UPDATE_EVENT_STATUS_QUERY, [
             eventId,
+            status
+        ]);
+        return mapToEvent(result.rows[0]);
+    }
+
+    async updateEventStatusAndColor(eventId: string, status: EventStatus, color: string): Promise<Event> {
+        const result = await this.query(UPDATE_EVENT_STATUS_AND_COLOR_QUERY, [
+            eventId,
             status,
-            color || null,
-            customerId || null
+            color
+        ]);
+        return mapToEvent(result.rows[0]);
+    }
+
+    async updateEventStatusAndCustomerId(eventId: string, status: EventStatus, customerId: string): Promise<Event> {
+        const result = await this.query(UPDATE_EVENT_STATUS_AND_CUSTOMER_ID_QUERY, [
+            eventId,
+            status,
+            customerId
+        ]);
+        return mapToEvent(result.rows[0]);
+    }
+
+    async updateEventStatusWithColorAndCustomerId(eventId: string, status: EventStatus, color: string, customerId: string): Promise<Event> {
+        const result = await this.query(UPDATE_EVENT_STATUS_COLOR_AND_CUSTOMER_ID_QUERY, [
+            eventId,
+            status,
+            color,
+            customerId
         ]);
         return mapToEvent(result.rows[0]);
     }

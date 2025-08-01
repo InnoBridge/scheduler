@@ -36,11 +36,32 @@ const createEvent = async (event: Event): Promise<Event> => {
     return await getDatabaseClient()!.createEvent(event);
 };
 
-const updateEventStatus = async (eventId: string, status: EventStatus, customerId?: string, color?: string): Promise<Event> => {
+const updateEventStatus = async (eventId: string, status: EventStatus): Promise<Event> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
     }
-    return await getDatabaseClient()!.updateEventStatus(eventId, status, color, customerId);
+    return await getDatabaseClient()!.updateEventStatus(eventId, status);
+};
+
+const updateEventStatusAndColor = async (eventId: string, status: EventStatus, color: string): Promise<Event> => {  
+    if (!isDatabaseClientSet()) {
+        throw new Error("Database client not initialized. Call initializeDatabase first.");
+    }
+    return await getDatabaseClient()!.updateEventStatusAndColor(eventId, status, color);
+};
+
+const updateEventStatusAndCustomerId = async (eventId: string, status: EventStatus, customerId: string): Promise<Event> => {
+    if (!isDatabaseClientSet()) {
+        throw new Error("Database client not initialized. Call initializeDatabase first.");
+    }
+    return await getDatabaseClient()!.updateEventStatusAndCustomerId(eventId, status, customerId);
+};
+
+const updateEventStatusWithColorAndCustomerId = async (eventId: string, status: EventStatus, color: string, customerId: string): Promise<Event> => {
+    if (!isDatabaseClientSet()) {
+        throw new Error("Database client not initialized. Call initializeDatabase first.");
+    }
+    return await getDatabaseClient()!.updateEventStatusWithColorAndCustomerId(eventId, status, color, customerId);
 };
 
 const deleteEvent = async (eventId: string): Promise<Event | null> => {
@@ -57,5 +78,8 @@ export {
     getEventsByProviderOrCustomer,
     createEvent,
     updateEventStatus,
+    updateEventStatusAndColor,
+    updateEventStatusAndCustomerId,
+    updateEventStatusWithColorAndCustomerId,
     deleteEvent
 };
