@@ -50,14 +50,14 @@ const updateEventStatusAndColor = async (eventId: string, status: EventStatus, c
     return await getDatabaseClient()!.updateEventStatusAndColor(eventId, status, color);
 };
 
-const updateEventStatusAndCustomerId = async (eventId: string, status: EventStatus, customerId: string): Promise<Event> => {
+const updateEventStatusAndCustomerId = async (eventId: string, status: EventStatus, customerId: string | null): Promise<Event> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
     }
     return await getDatabaseClient()!.updateEventStatusAndCustomerId(eventId, status, customerId);
 };
 
-const updateEventStatusWithColorAndCustomerId = async (eventId: string, status: EventStatus, color: string, customerId: string): Promise<Event> => {
+const updateEventStatusWithColorAndCustomerId = async (eventId: string, status: EventStatus, color: string, customerId: string | null): Promise<Event> => {
     if (!isDatabaseClientSet()) {
         throw new Error("Database client not initialized. Call initializeDatabase first.");
     }
