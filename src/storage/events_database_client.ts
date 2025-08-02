@@ -1,6 +1,5 @@
 import { BaseDatabaseClient } from '@/storage/base_database_client';
 import { Event, EventStatus } from '@/models/events';
-import { Nullable } from 'vitest';
 
 interface EventsDatabaseClient extends BaseDatabaseClient {
     getEventById(eventId: string): Promise<Event | null>;
