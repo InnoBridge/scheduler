@@ -89,7 +89,7 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         return mapToEvent(result.rows[0]);
     }
 
-    async updateEventStatusAndCustomerId(eventId: string, status: EventStatus, customerId: string): Promise<Event> {
+    async updateEventStatusAndCustomerId(eventId: string, status: EventStatus, customerId: string | null): Promise<Event> {
         const result = await this.query(UPDATE_EVENT_STATUS_AND_CUSTOMER_ID_QUERY, [
             eventId,
             status,
@@ -98,7 +98,7 @@ class EventsPostgresClient extends BasePostgresClient implements EventsDatabaseC
         return mapToEvent(result.rows[0]);
     }
 
-    async updateEventStatusWithColorAndCustomerId(eventId: string, status: EventStatus, color: string, customerId: string): Promise<Event> {
+    async updateEventStatusWithColorAndCustomerId(eventId: string, status: EventStatus, color: string, customerId: string | null): Promise<Event> {
         const result = await this.query(UPDATE_EVENT_STATUS_COLOR_AND_CUSTOMER_ID_QUERY, [
             eventId,
             status,
